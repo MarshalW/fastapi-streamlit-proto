@@ -1,0 +1,27 @@
+networks:
+  llm-sse:
+    name: llm-sse
+services:
+  llm-server:
+    image: llm-server
+    container_name: llm-server
+    init: true
+    restart: always
+    networks:
+      - llm-sse
+    volumes:
+      - ./server/src:/app
+    ports:
+      - 7777:7777
+
+  llm-client:
+    image: llm-client
+    container_name: llm-client
+    init: true
+    restart: always
+    networks:
+      - llm-sse
+    volumes:
+      - ./client/src:/app
+    ports:
+      - 8501:8501
